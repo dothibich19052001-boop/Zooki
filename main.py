@@ -4,8 +4,8 @@ from sqlalchemy.orm import Session
 from pydantic import BaseModel
 from typing import List, Optional, Any
 
-from . import models
-from .database import engine, Base, get_db
+import models
+from database import engine, Base, get_db
 
 Base.metadata.create_all(bind=engine)
 
@@ -32,6 +32,7 @@ def sync_data(data: UserSyncData, db: Session = Depends(get_db)):
         db_user = models.User(
             user_id=data.user_id,
             name=data.user.get("name"),
+            phone=data.user.get("phone"),
             gender=data.user.get("gender"),
             age=data.user.get("age"),
             weight=data.user.get("weight"),
@@ -60,6 +61,7 @@ def get_user(user_id: str, db: Session = Depends(get_db)):
         "user_id": db_user.user_id,
         "user": {
             "name": db_user.name,
+            "phone": db_user.phone,
             "gender": db_user.gender,
             "age": db_user.age,
             "weight": db_user.weight,
@@ -80,6 +82,7 @@ def get_leads(db: Session = Depends(get_db)):
         leads.append({
             "user_id": u.user_id,
             "name": u.name,
+            "phone": u.phone,
             "gender": u.gender,
             "age": u.age,
             "weight": u.weight,

@@ -1,11 +1,12 @@
 from sqlalchemy import Column, Integer, String, Float, JSON
-from .database import Base
+from database import Base
 
 class User(Base):
     __tablename__ = "users"
 
     user_id = Column(String, primary_key=True, index=True)
     name = Column(String)
+    phone = Column(String)
     gender = Column(String)
     age = Column(Integer)
     weight = Column(Float)
